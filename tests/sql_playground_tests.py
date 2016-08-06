@@ -1,10 +1,11 @@
 from nose.tools import *
-import sqlalchemy
-from sqlalchemy import MetaData, Table, Column, Integer, ForeignKey, String
+from sqlalchemy import MetaData, Table
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import app.database as db
+from app.models import Event, Location
 
+db.init_db()
 
 def test_making_sql_conn():
     metadata = MetaData(db.engine)
@@ -14,43 +15,17 @@ def test_making_sql_conn():
     locs = Table("locations", metadata, autoload=True)
     assert_equal("72 nd Street Train Station", locs.select().execute().first()["name"])
 
-Base = declarative_base()
-
-class Event(Base):
-    __tablename__ = "events"
-    id = Column(Integer, primary_key = True)
-    name = Column(String)
-    locations = relationship("Location", back_populates="event")
-
-    def __repr__(self):
-        return "<Event id: %s, name: %s>" % (self.id, self.name)
-
-class Location(Base):
-    __tablename__ = "locations"
-    id = Column(Integer, primary_key = True)
-    name = Column(String)
-    event_id = Column(Integer, ForeignKey("events.id"))
-    event = relationship("Event", back_populates="locations")
-
-    def __repr__(self):
-        return "<Location id: %s, name: %s, event_id: %s>" % (self.id, self.name, self.event_id)
-
-Session = sessionmaker(bind=db.engine)
-session = Session()
-
-
 def test_using_orm():
-    Base.metadata.create_all(db.engine)
     an_event = Event(name = "Pizza Party")
     assert_equal("Pizza Party", an_event.name)
-    session.add(an_event)
-    session.commit()
+    db.session.add(an_event)
+    db.session.commit()
     assert_equal(int, type(an_event.id) )
-    our_event = session.query(Event).order_by(Event.id.desc()).first()
+    our_event = db.session.query(Event).order_by(Event.id.desc()).first()
     assert_equal("Pizza Party", our_event.name)
 
 def test_using_relationships():
-    event = session.query(Event).first()
+    event = db.session.query(Event).first()
     loc = event.locations[0]
     assert_equal(Location, type(loc))
     assert_equal(event.id, loc.event_id)
