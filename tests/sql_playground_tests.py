@@ -8,6 +8,7 @@ from app.models import Event, Location
 db = DB("hfa_events_dev")
 db.init_db()
 
+@nottest
 def test_making_sql_conn():
     metadata = MetaData(db.engine)
     events = Table("events", metadata, autoload=True)

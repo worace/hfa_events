@@ -45,7 +45,6 @@ pip freeze
 pip freeze > requirements.txt
 #+END_EXAMPLE
 
-
 ** Postgres SQLAlchemy Setup
 Ubuntu needs some native extensions for these drivers:
 #+BEGIN_EXAMPLE
@@ -102,3 +101,8 @@ Locations:
     spaces_remaining (Boolean)
     name (String)
 #+END_EXAMPLE
+** Interactive Debugger
+#+BEGIN_SRC python
+# handy snippet to give pry-like interface...
+import code; code.interact(local=dict(globals(), **locals()))
+#+END_SRC

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask.json import jsonify
 from app.database import DB
 from app.models import Event
@@ -20,3 +20,16 @@ def all_events():
 def show_events():
     return jsonify(map(lambda event: event.serialize(),
                        all_events()))
+
+@app.route("/events", methods=["POST"])
+def create_event():
+    event = Event(**request.json)
+    db.session.add(event)
+    db.session.commit()
+    return jsonify({"success": True,
+                    "event": event.serialize()})
+
+@app.route("/events/<int:event_id>")
+def show_event(event_id):
+    event = query(Event).filter(Event.id == event_id).first()
+    return jsonify(event.serialize())
