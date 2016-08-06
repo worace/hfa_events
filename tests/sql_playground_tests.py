@@ -1,14 +1,13 @@
 from nose.tools import *
 import sqlalchemy
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, ForeignKey, String
+from sqlalchemy import MetaData, Table, Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import app.database as db
 
-engine = create_engine('postgresql:///hfa_events')
-# engine.echo = True
-metadata = MetaData(bind=engine)
 
 def test_making_sql_conn():
+    metadata = MetaData(db.engine)
     events = Table("events", metadata, autoload=True)
     assert_equal("UWS Voter Registration", events.select().execute().first()["name"])
 
@@ -36,12 +35,12 @@ class Location(Base):
     def __repr__(self):
         return "<Location id: %s, name: %s, event_id: %s>" % (self.id, self.name, self.event_id)
 
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=db.engine)
 session = Session()
 
 
 def test_using_orm():
-    Base.metadata.create_all(engine)
+    Base.metadata.create_all(db.engine)
     an_event = Event(name = "Pizza Party")
     assert_equal("Pizza Party", an_event.name)
     session.add(an_event)
