@@ -18,12 +18,26 @@ def drop_db(db_name):
 def list_tables():
     return run_command("psql -P pager=off -c '\l'")
 
-def import_db(db_name, dump_file):
+def create_db(db_name):
     run_command("createdb %s" % db_name)
+
+def import_db(db_name, dump_file):
     return run_command("psql %s < %s" % (db_name, dump_file))
 
+def migrate(db_name, schema = "./app/schema.sql"):
+    run_command("psql -d %s -f '%s'" % (db_name, schema))
+
+def setup():
+    drop_db("hfa_events_dev")
+    drop_db("hfa_events_test")
+
+    create_db("hfa_events_dev")
+    create_db("hfa_events_test")
+
+    print import_db("hfa_events_dev", "./assignment/data.pgdump")
+
+    migrate("hfa_events_dev")
+    migrate("hfa_events_test")
+
 if __name__ == "__main__":
-    db_name = "hfa_events" #TODO: parameterize this by dev/prod/test
-    import_file = "./assignment/data.pgdump"
-    print drop_db(db_name)
-    print import_db(db_name, import_file)
+    setup()

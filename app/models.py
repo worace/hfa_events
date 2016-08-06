@@ -11,6 +11,9 @@ class Event(Model):
     def __repr__(self):
         return "<Event id: %s, name: %s>" % (self.id, self.name)
 
+    def serialize(self):
+        return {"id": self.id, "name": self.name}
+
 class Location(Model):
     __tablename__ = "locations"
     id = Column(Integer, primary_key = True)

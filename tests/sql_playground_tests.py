@@ -2,9 +2,10 @@ from nose.tools import *
 from sqlalchemy import MetaData, Table
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-import app.database as db
+from app.database import DB
 from app.models import Event, Location
 
+db = DB("hfa_events_dev")
 db.init_db()
 
 def test_making_sql_conn():
