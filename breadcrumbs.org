@@ -31,6 +31,19 @@ Isolates pip dependencies for the given project; seems to be good practice
 #+BEGIN_EXAMPLE
 pip install --user virtualenv
 virtualenv env
+# to activate the env:
+source env/bin/activate
 #+END_EXAMPLE
+
+Then pip packages will install locally, and you can check the current environment:
+
+#+BEGIN_EXAMPLE
+pip install nose
+pip freeze
+
+# save env in requirements doc...
+pip freeze > requirements.txt
+#+END_EXAMPLE
+
 
 
