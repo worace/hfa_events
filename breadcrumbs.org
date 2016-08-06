@@ -1,9 +1,7 @@
 * Setup Breadcrumbs
-
 #+BEGIN_QUOTE
 well, how did i get here...
 #+END_QUOTE
-
 ** VirtualBox Setup
 Install from apt repository
 
@@ -12,7 +10,6 @@ wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key a
 sudo apt-get update
 sudo apt-get install virtualbox-5.1
 #+END_EXAMPLE
-
 
 ** Postgres Setup (ubuntu desktop)
 #+BEGIN_EXAMPLE
@@ -24,8 +21,16 @@ createdb (from user account)
 #+END_EXAMPLE
 
 ** Importing the PG Dump
-
 #+BEGIN_EXAMPLE
 createdb hfa_events
 psql hfa_events < assignment/data.pgdump
 #+END_EXAMPLE
+** VirtualEnv
+Isolates pip dependencies for the given project; seems to be good practice
+
+#+BEGIN_EXAMPLE
+pip install --user virtualenv
+virtualenv env
+#+END_EXAMPLE
+
+
