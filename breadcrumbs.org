@@ -46,4 +46,59 @@ pip freeze > requirements.txt
 #+END_EXAMPLE
 
 
+** Postgres SQLAlchemy Setup
+Ubuntu needs some native extensions for these drivers:
+#+BEGIN_EXAMPLE
+sudo apt-get install python-psycopg2 libpq-dev
+pip install psycopg2
+#+END_EXAMPLE
+** Table Schemas
+*** Events
+#+BEGIN_EXAMPLE
+    id (Integer)
+    status (String)
+    start_date (DateTime)
+    end_date (DateTime)
+    description (String)
+    official (Boolean)
+    visibility (String)
+    guests_can_invite_others (Boolean)
+    modified_date (DateTime)
+    created_date (DateTime)
+    participant_count (Numeric)
+    reason_for_private (String)
+    order_email_template (String)
+    name (String)
+    locations = (Location)
+#+END_EXAMPLE
+*** Locations
+Locations:
+#+BEGIN_EXAMPLE
+	id (Integer)
+    event_id (Integer, links to parent event's id)
 
+    address_type (String)
+    contact_phone (String)
+    primary (Boolean)
+    contact_email (String)
+    contact_family_name (String)
+    contact_given_name (String)
+    host_given_name (String)
+    timezone (String)
+    city (String)
+    locality (String)
+    state (String)
+    address_type (String)
+    latitude (String)
+    longitude (String)
+    accuracy (String)
+    address1 (String)
+    address2 (String)
+    postal_code (String)
+    country (String)
+    modified_date (DateTime)
+    created_date (DateTime)
+    number_spaces_remaining (Numeric)
+    spaces_remaining (Boolean)
+    name (String)
+#+END_EXAMPLE
