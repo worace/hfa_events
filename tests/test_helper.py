@@ -6,12 +6,12 @@ import json
 
 class AppTestCase(TestCase):
     def setUp(self):
-        app.config["db"].session.query(Event).delete()
         app.config["db"].session.query(Location).delete()
+        app.config["db"].session.query(Event).delete()
 
     def tearDown(self):
-        app.config["db"].session.query(Event).delete()
         app.config["db"].session.query(Location).delete()
+        app.config["db"].session.query(Event).delete()
 
     def create_app(self):
         return app

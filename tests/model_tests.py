@@ -1,4 +1,4 @@
-from app.models import Event
+from app.models import Event, Location
 from nose.tools import *
 # from datetime import datetime
 import datetime
@@ -15,10 +15,28 @@ event_data = {
     "name": "UWS Voter Registration"
 }
 
-@nottest
+location_data = {
+    "event_id": 1,
+    "contact_phone": "1234567890",
+    "contact_email": "example@example.com",
+    "contact_family_name": "Pizza",
+    "contact_given_name": "Man",
+    "city": "New York",
+    "latitude": 40.7787927,
+    "longitude": -73.9820623,
+    "address1": "72 nd Street at Broadway",
+    "postal_code": "10024",
+    "country": "US",
+    "number_spaces_remaining": 42,
+    "spaces_remaining": True,
+    "name": "72 nd Street Train Station"
+}
+
 def test_creates_event_from_dict():
     event = Event(**event_data)
     assert_equal("confirmed", event.status)
-    start = datetime.datetime(2015, 8, 22, 17,0,0)
-    assert_equal(start, event.start_date)
 
+def test_creates_location_from_dict():
+    location = Location(**location_data)
+    assert_equal("Pizza", location.contact_family_name)
+    assert_equal("Man", location.contact_given_name)
