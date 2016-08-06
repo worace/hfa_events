@@ -20,4 +20,10 @@ def list_tables():
 
 def import_db(db_name, dump_file):
     run_command("createdb %s" % db_name)
-    run_command("psql %s < %s" % (db_name, dump_file))
+    return run_command("psql %s < %s" % (db_name, dump_file))
+
+if __name__ == "__main__":
+    db_name = "hfa_events" #TODO: parameterize this by dev/prod/test
+    import_file = "./assignment/data.pgdump"
+    print drop_db(db_name)
+    print import_db(db_name, import_file)
