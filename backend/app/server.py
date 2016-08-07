@@ -64,6 +64,9 @@ def create_attendee(event_id):
     attendee = Attendee(**user_info)
     event.attendees.append(attendee)
 
-    db().save_records(event, attendee)
+    try:
+        db().save_records(event, attendee)
+        return jsonify(map(lambda a: a.serialize(), event.attendees))
+    except Exception:
+        return jsonify(map(lambda a: a.serialize(), event.attendees))
 
-    return jsonify(map(lambda a: a.serialize(), event.attendees))

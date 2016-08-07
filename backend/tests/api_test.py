@@ -111,3 +111,19 @@ class ApiTest(AppTestCase):
 
         assert_equal([user_info], updated_event["attendee_info"])
 
+
+    def test_duplicate_rsvps_get_ignored(self):
+        event_data, event_response = self.create_sample_event()
+        event_id = event_data["id"]
+
+        user_info = {"name": "Horace", "email": "h@example.com"}
+
+        path = "/events/%s/attendees" % event_id
+        response = self.post_json(path, user_info)
+
+        assert_equal(response.status_code, 200)
+        assert_equal([user_info], response.json)
+
+        response = self.post_json(path, user_info)
+        assert_equal(response.status_code, 200)
+        assert_equal([user_info], response.json)

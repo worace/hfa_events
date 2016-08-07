@@ -3,18 +3,21 @@
 well, how did i get here...
 #+END_QUOTE
 ** Todo
-*** DONE User "sign in" -- entering details to localstorage?
-*** TODO Marking an event as attending??
+*** TODO Un-RSVP from an event
 *** TODO sort events in chronological order
 *** TODO Pagination on events index / Location Index
-*** DONE choose and add additional attributes to events index
-*** DONE add more detailed attrs to event show?
-*** DONE Sort out event detail collapse / expand
 *** TODO flask-rest / flask-rest-swagger  ?
 *** TODO Calendar animation for loading state on list?
 *** TODO can CORS be tuned more? currently just whitelisted everything
 
 *** TODO much more styling
+
+*** DONE Handle unique RSVPs (by name and email)
+*** DONE choose and add additional attributes to events index
+*** DONE add more detailed attrs to event show?
+*** DONE Sort out event detail collapse / expand
+*** DONE User "sign in" -- entering details to localstorage?
+*** DONE Marking an event as attending??
 
 ** VirtualBox Setup
 Install from apt repository

@@ -57,3 +57,4 @@ CREATE TABLE IF NOT EXISTS attendees (
 );
 
 CREATE INDEX attendee_event_id ON attendees (event_id);
+CREATE UNIQUE INDEX attendees_name_email_event ON attendees (event_id, email, name);

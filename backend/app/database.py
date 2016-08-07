@@ -23,7 +23,11 @@ class DB(object):
         Model.metadata.create_all(bind = self.engine)
 
     def save_records(self, *records):
-        for r in records:
-            self.session.add(r)
+        try:
+            for r in records:
+                self.session.add(r)
+            return self.session.commit()
+        except Exception, e:
+            self.session.rollback()
+            raise e
 
-        return self.session.commit()
