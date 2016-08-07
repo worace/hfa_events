@@ -3,10 +3,10 @@
 well, how did i get here...
 #+END_QUOTE
 ** Todo
+*** DONE User "sign in" -- entering details to localstorage?
 *** TODO Marking an event as attending??
 *** TODO sort events in chronological order
 *** TODO Pagination on events index / Location Index
-*** TODO User "sign in" -- entering details to localstorage?
 *** DONE choose and add additional attributes to events index
 *** DONE add more detailed attrs to event show?
 *** DONE Sort out event detail collapse / expand
