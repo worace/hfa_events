@@ -71,8 +71,7 @@ class ApiTest(AppTestCase):
         self.create_sample_event()
 
         expected_attrs = [u"name", u"start_date", u"end_date",
-                          u"description", u"participant_count",
-                          u"status", u"id", u"location_info", u"attendee_info"]
+                          u"description", u"status", u"id", u"location_info", u"attendee_info"]
 
         event = self.client.get("/events").json[0]
         assert_equal(sorted(expected_attrs), sorted(event.keys()))

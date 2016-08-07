@@ -91,7 +91,7 @@ class Event(Model, Serializable, Pageable):
 
     def serialized_attrs(self):
         return ["id", "name", "start_date", "end_date","description",
-                "participant_count", "status", "location_info", "attendee_info"]
+                "status", "location_info", "attendee_info"]
 
 class Location(Model, Serializable, Pageable):
     __tablename__ = "locations"

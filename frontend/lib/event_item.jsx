@@ -43,7 +43,7 @@ const EventItem = React.createClass({
     return loc.city + ", " + loc.state;
   },
   signedUpCount: function() {
-    let count = this.state.event.participant_count;
+    let count = this.state.event.attendees_info.length;
     switch (count) {
       case 0:
         return "0 people going";
