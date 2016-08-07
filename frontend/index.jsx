@@ -6,22 +6,18 @@ import API from "./lib/api";
 import UserInfo from "./lib/user_info"
 import EventItem from "./lib/event_item"
 
-
-/* - Render the list of events in chronological order,
-     displaying whatever details you deem necessary for each event
- * - Allow a user to view more details about each event,
-   including ticket tiers, event description, etc.
- * - You can display the details on the same page, or create a second "event details" page.
- * - Allow a user to mark an event as "attending"
-   - if a user has marked an event as "attending," this state should be reflected in the list of events, as well as on the event details page.
- * */
-
 const EventsList = React.createClass({
-  getInitialState: function() {
-    API.getEvents().then(function(events) {
-      this.setState({events: events});
+  fetchNextPage: function() {
+    this.fetchEvents(this.state.page + 1);
+  },
+  fetchEvents: function(page) {
+    API.getEvents(page).then(function(events) {
+      this.setState({events: this.state.events.concat(events), page: page});
     }.bind(this));
-    return {events: []};
+  },
+  getInitialState: function() {
+    this.fetchEvents(1);
+    return {events: [], page: 1};
   },
   eventElements: function() {
     return this.state.events.map(function(event, index) {
@@ -30,12 +26,17 @@ const EventsList = React.createClass({
   },
   render: function() {
     return (
-      <div className="row">
-        <div className="events col-sm-9">
-          { this.eventElements() }
+      <div className="container">
+        <div className="row">
+          <div className="events col-sm-9">
+            { this.eventElements() }
+          </div>
+          <div className="events col-sm-3">
+            <UserInfo/>
+          </div>
         </div>
-        <div className="events col-sm-3">
-          <UserInfo/>
+        <div className="row">
+          <button className="btn btn-primary" type="submit" onClick={this.fetchNextPage}>More Events</button>
         </div>
       </div>
     );
