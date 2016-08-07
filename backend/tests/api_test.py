@@ -67,7 +67,7 @@ class ApiTest(AppTestCase):
 
         expected_attrs = [u"name", u"start_date", u"end_date",
                           u"description", u"participant_count",
-                          u"status", u"id", u"location_info"]
+                          u"status", u"id", u"location_info", u"attendee_info"]
 
         event = self.client.get("/events").json[0]
         assert_equal(sorted(expected_attrs), sorted(event.keys()))
@@ -97,11 +97,16 @@ class ApiTest(AppTestCase):
 
     def test_can_rsvp_for_an_event(self):
         event_data, event_response = self.create_sample_event()
+        event_id = event_data["id"]
 
         user_info = {"name": "Horace", "email": "h@example.com"}
 
-        path = "/events/%s/attendees" % event_data["id"]
+        path = "/events/%s/attendees" % event_id
         response = self.post_json(path, user_info)
 
         assert_equal(response.status_code, 200)
+
+        updated_event = self.client.get("/events/%s" % event_id).json
+
+        assert_equal([user_info], updated_event["attendee_info"])
 

@@ -25,6 +25,9 @@ class Attendee(Model, Serializable):
     event_id = Column(Integer, ForeignKey("events.id"))
     event = relationship("Event", back_populates="attendees")
 
+    def serialized_attrs(self):
+        return ["name", "email"]
+
 class Event(Model, Serializable):
     __tablename__ = "events"
     id = Column(Integer, primary_key = True)
@@ -52,6 +55,10 @@ class Event(Model, Serializable):
         return "<Event id: %s, name: %s>" % (self.id, self.name)
 
     @property
+    def attendee_info(self):
+        return map(lambda att: att.serialize(), self.attendees)
+
+    @property
     def location_info(self):
         if self.locations:
             return self.locations[0].serialize()
@@ -60,7 +67,7 @@ class Event(Model, Serializable):
 
     def serialized_attrs(self):
         return ["id", "name", "start_date", "end_date","description",
-                "participant_count", "status", "location_info"]
+                "participant_count", "status", "location_info", "attendee_info"]
 
 class Location(Model, Serializable):
     __tablename__ = "locations"
