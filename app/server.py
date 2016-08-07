@@ -3,15 +3,13 @@ from flask.json import jsonify
 from app.database import DB
 from app.models import Event, Location
 
-db = DB("hfa_events_test")
-db.init_db()
-
 app = Flask(__name__)
-app.config.from_object(__name__)
-app.config.update({"db": db})
+
+def db():
+    return app.config["db"]
 
 def query(model):
-    return db.session.query(model)
+    return db().session.query(model)
 
 def all_events():
     return query(Event).all()
@@ -28,8 +26,7 @@ def show_events():
 @app.route("/events", methods=["POST"])
 def create_event():
     event = Event(**request.json)
-    db.session.add(event)
-    db.session.commit()
+    db().save_record(event)
     return jsonify({"success": True,
                     "event": event.serialize()})
 
@@ -47,8 +44,7 @@ def show_locations():
 @app.route("/locations", methods=["POST"])
 def create_location():
     loc = Location(**request.json)
-    db.session.add(loc)
-    db.session.commit()
+    db().save_record(loc)
     return jsonify({"success": True,
                     "location": loc.serialize()})
 
