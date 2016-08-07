@@ -6,7 +6,18 @@ def ascii_keys(d):
     return dict(map(lambda (k,v): (k.encode("ascii"), v),
                     d.items()))
 
-class Event(Model):
+class Serializable(object):
+    def serialized_attrs(self):
+        return []
+
+    def serialize(self):
+        attrs = {}
+        for attr in self.serialized_attrs():
+            attrs[attr] = getattr(self, attr)
+
+        return attrs
+
+class Event(Model, Serializable):
     __tablename__ = "events"
     id = Column(Integer, primary_key = True)
     name = Column(String)
@@ -31,10 +42,11 @@ class Event(Model):
     def __repr__(self):
         return "<Event id: %s, name: %s>" % (self.id, self.name)
 
-    def serialize(self):
-        return {"id": self.id, "name": self.name}
+    def serialized_attrs(self):
+        return ["id", "name", "start_date", "end_date","description",
+                "participant_count","status"]
 
-class Location(Model):
+class Location(Model, Serializable):
     __tablename__ = "locations"
     id = Column(Integer, primary_key = True)
     name = Column(String)
@@ -71,5 +83,8 @@ class Location(Model):
     def __repr__(self):
         return "<Location id: %s, name: %s, event_id: %s>" % (self.id, self.name, self.event_id)
 
-    def serialize(self):
-        return {"id": self.id, "name": self.name}
+    def serialized_attrs(self):
+        return ["id", "name", "contact_email", "contact_phone", "contact_family_name",
+         "contact_given_name", "host_given_name", "city", "state",
+         "address1", "address2", "number_spaces_remaining",
+         "spaces_remaining"]

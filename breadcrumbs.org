@@ -2,6 +2,14 @@
 #+BEGIN_QUOTE
 well, how did i get here...
 #+END_QUOTE
+** Todo
+  * sort events in chronological order
+  * choose and add additional attributes to events index
+  * add more detailed attrs to event show?
+  * Sort out event detail collapse / expand
+  * User "sign in" -- entering details to localstorage?
+  * Marking an event as attending??
+
 ** VirtualBox Setup
 Install from apt repository
 
