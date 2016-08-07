@@ -63,7 +63,7 @@ class ApiTest(AppTestCase):
 
         expected_attrs = [u"name", u"start_date", u"end_date",
                           u"description", u"participant_count",
-                          u"status", u"id"]
+                          u"status", u"id", u"location_info"]
 
         event = self.client.get("/events").json[0]
         assert_equal(sorted(expected_attrs), sorted(event.keys()))
@@ -80,3 +80,13 @@ class ApiTest(AppTestCase):
 
         event = self.client.get("/locations").json[0]
         assert_equal(sorted(expected_attrs), sorted(event.keys()))
+
+    def test_event_includes_location_data_if_available(self):
+        # Create an event for our location to point to
+        event_data, event_response = self.create_sample_event()
+
+        location_data, response = self.create_sample_location(event_response.json["event"]["id"])
+        response = self.client.get("/events")
+        event = response.json[0]
+
+        assert_equal(location_data["name"], event["location_info"]["name"])

@@ -42,9 +42,16 @@ class Event(Model, Serializable):
     def __repr__(self):
         return "<Event id: %s, name: %s>" % (self.id, self.name)
 
+    @property
+    def location_info(self):
+        if self.locations:
+            return self.locations[0].serialize()
+        else:
+            return None
+
     def serialized_attrs(self):
         return ["id", "name", "start_date", "end_date","description",
-                "participant_count","status"]
+                "participant_count", "status", "location_info"]
 
 class Location(Model, Serializable):
     __tablename__ = "locations"

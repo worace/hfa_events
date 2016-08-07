@@ -16,13 +16,15 @@ const EventsList = React.createClass({
   getInitialState: function() {
     console.log("will get events..")
     API.getEvents().then(function(events) {
+
+      console.log("received events:", events)
       this.setState({events: events});
     }.bind(this));
     return {events: []};
   },
   eventElements: function() {
     return this.state.events.map(function(event, index) {
-      return(<EventItem event={event}/>);
+      return(<EventItem key={event.id} event={event}/>);
     });
   },
   render: function() {
@@ -41,6 +43,12 @@ const EventItem = React.createClass({
     return(
       <li>
         <p>{this.props.event.name}</p>
+        <p>
+          <span>{this.props.event.start_date}</span>
+          to
+          <span>{this.props.event.end_date}</span>
+        </p>
+        <p>{this.props.event.participant_count} signed up!</p>
       </li>
     )
   }
