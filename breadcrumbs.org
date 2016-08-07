@@ -4,10 +4,10 @@ well, how did i get here...
 #+END_QUOTE
 ** Todo
 *** Blockers
-**** TODO more styling
 **** TODO Bulk query for event associations (location and attendees)
-**** TODO Parameterize API url in frontend
 **** TODO vagrant setup
+**** DONE Parameterize API url in frontend
+**** DONE more styling
 **** DONE Make attendee count pull from attendees rather than static attribute
 **** DONE pagination on locations index
 **** DONE Pagination on events index
