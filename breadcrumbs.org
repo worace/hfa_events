@@ -4,7 +4,6 @@ well, how did i get here...
 #+END_QUOTE
 ** Todo
 *** TODO Bulk query for event associations (location and attendees)
-*** TODO Make attendee count pull from attendees rather than static attribute
 *** TODO Parameterize API url in frontend
 *** TODO flask-rest / flask-rest-swagger  ?
 *** TODO Calendar animation for loading state on list?
@@ -12,6 +11,7 @@ well, how did i get here...
 
 *** TODO much more styling
 
+*** DONE Make attendee count pull from attendees rather than static attribute
 *** DONE pagination on locations index
 *** DONE Pagination on events index
 *** DONE sort events in chronological order
