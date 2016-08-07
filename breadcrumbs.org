@@ -3,16 +3,18 @@
 well, how did i get here...
 #+END_QUOTE
 ** Todo
+*** TODO Marking an event as attending??
 *** TODO sort events in chronological order
+*** TODO Pagination on events index / Location Index
+*** TODO User "sign in" -- entering details to localstorage?
 *** DONE choose and add additional attributes to events index
 *** DONE add more detailed attrs to event show?
-*** TODO Sort out event detail collapse / expand
-*** TODO User "sign in" -- entering details to localstorage?
-*** TODO Marking an event as attending??
+*** DONE Sort out event detail collapse / expand
 *** TODO flask-rest / flask-rest-swagger  ?
-*** TODO Pagination on events index / Location Index
 *** TODO Calendar animation for loading state on list?
 *** TODO can CORS be tuned more? currently just whitelisted everything
+
+*** TODO much more styling
 
 ** VirtualBox Setup
 Install from apt repository
