@@ -2,11 +2,12 @@ from flask import Flask, request
 from flask.json import jsonify
 from app.database import DB
 from app.models import Event, Location
+from app.json_encoder import DecimalSafeJSONEncoder
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins = "*localhost*")
-# , origins = ["http://localhost:8888","https://localhost:8888"]
+app.json_encoder = DecimalSafeJSONEncoder
+CORS(app)
 
 def db():
     return app.config["db"]
