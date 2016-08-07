@@ -1,17 +1,22 @@
 from nose.tools import *
 from test_helper import AppTestCase
 import json
+import datetime
 
 class ApiTest(AppTestCase):
-    def create_sample_event(self):
-        event_json = self.read_file("./tests/sample_event.json")
-        event_data = json.loads(event_json)
+
+    def create_event(self, event_data):
         for k in ["id", "modified_date", "created_date"]:
             event_data.pop(k, None)
 
         response = self.post_json("/events", event_data)
         event_data["id"] = response.json["event"]["id"]
         return (event_data, response)
+
+    def create_sample_event(self):
+        event_json = self.read_file("./tests/sample_event.json")
+        event_data = json.loads(event_json)
+        return self.create_event(event_data)
 
     def create_sample_location(self, event_id):
         location_json = self.read_file("./tests/sample_location.json")
@@ -140,3 +145,31 @@ class ApiTest(AppTestCase):
         assert_equal(response.status_code, 200)
         assert_equal([], response.json)
 
+    def test_returns_events_in_chronological_order_of_start_date(self):
+        times = []
+        for offset in [5,30,100]:
+            times.append(datetime.datetime.now() + datetime.timedelta(hours=offset))
+
+        # "start_date": "2015-08-22 17:00:00",
+        serialized_times = []
+        for t in times:
+            serialized_times.append(t.strftime("%Y-%m-%d %H:%M:%S"))
+
+        soon, sooner, soonest = serialized_times
+
+        e1 = {"start_date": sooner}
+        e2 = {"start_date": soonest}
+        e3 = {"start_date": soon}
+
+        for e in [e1,e2,e3]:
+            self.create_event(e)
+
+        all_events = self.client.get("/events").json
+        recv_times = []
+
+        # have to convert them back to the matching format....
+        for e in all_events:
+            time = datetime.datetime.strptime(e["start_date"], "%a, %d %b %Y %H:%M:%S %Z")
+            recv_times.append(time.strftime("%Y-%m-%d %H:%M:%S"))
+
+        assert_equal([soonest, sooner, soon], recv_times)

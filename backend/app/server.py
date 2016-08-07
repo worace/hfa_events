@@ -4,6 +4,7 @@ from app.database import DB
 from app.models import Event, Location, Attendee
 from app.json_encoder import DecimalSafeJSONEncoder
 from flask_cors import CORS
+from sqlalchemy import desc
 
 app = Flask(__name__)
 app.json_encoder = DecimalSafeJSONEncoder
@@ -16,7 +17,7 @@ def query(model):
     return db().session.query(model)
 
 def all_events():
-    return query(Event).all()
+    return query(Event).order_by(desc(Event.start_date)).all()
 
 def all_locations():
     return query(Location).all()
