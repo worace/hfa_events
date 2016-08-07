@@ -66,4 +66,4 @@ def create_attendee(event_id):
 
     db().save_records(event, attendee)
 
-    return jsonify({"success": True})
+    return jsonify(map(lambda a: a.serialize(), event.attendees))

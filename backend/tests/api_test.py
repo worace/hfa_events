@@ -105,6 +105,7 @@ class ApiTest(AppTestCase):
         response = self.post_json(path, user_info)
 
         assert_equal(response.status_code, 200)
+        assert_equal([user_info], response.json)
 
         updated_event = self.client.get("/events/%s" % event_id).json
 
