@@ -4,7 +4,6 @@ from app.database import DB
 from app.models import Event, Location, Attendee
 from app.json_encoder import DecimalSafeJSONEncoder
 from flask_cors import CORS
-from sqlalchemy import desc
 
 app = Flask(__name__)
 app.json_encoder = DecimalSafeJSONEncoder
@@ -16,17 +15,19 @@ def db():
 def query(model):
     return db().session.query(model)
 
-def all_events():
-    return query(Event).order_by(desc(Event.start_date)).all()
-
 def all_locations():
     return query(Location).all()
 
+def page_number(request):
+    try:
+        return max([1, int(request.args["page"])])
+    except Exception:
+        return 1
+
 @app.route("/events", methods=["GET"])
 def show_events():
-    #TODO -- probably want to paginate these
     return jsonify(map(lambda event: event.serialize(),
-                       all_events()))
+                       Event.paged(db(), page_number(request))))
 
 @app.route("/events", methods=["POST"])
 def create_event():

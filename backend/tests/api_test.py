@@ -173,3 +173,20 @@ class ApiTest(AppTestCase):
             recv_times.append(time.strftime("%Y-%m-%d %H:%M:%S"))
 
         assert_equal([soonest, sooner, soon], recv_times)
+
+    def test_events_are_paginated(self):
+        names = []
+        for i in range(12):
+            names.append("Event #%s" % i)
+
+        for n in names:
+            self.create_event({"name": n})
+
+        all_events = self.client.get("/events").json
+        assert_equal(len(all_events), 10)
+
+        all_events = self.client.get("/events?page=2").json
+        assert_equal(len(all_events), 2)
+
+        all_events = self.client.get("/events?page=-50").json
+        assert_equal(len(all_events), 10)

@@ -1,7 +1,7 @@
 from app.models import Event, Location
 from nose.tools import *
-# from datetime import datetime
 import datetime
+from test_helper import AppTestCase
 
 event_data = {
     "status": "confirmed",
@@ -32,11 +32,28 @@ location_data = {
     "name": "72 nd Street Train Station"
 }
 
-def test_creates_event_from_dict():
-    event = Event(**event_data)
-    assert_equal("confirmed", event.status)
 
-def test_creates_location_from_dict():
-    location = Location(**location_data)
-    assert_equal("Pizza", location.contact_family_name)
-    assert_equal("Man", location.contact_given_name)
+class ModelTests(AppTestCase):
+    def test_creates_event_from_dict(self):
+        event = Event(**event_data)
+        assert_equal("confirmed", event.status)
+
+    def test_creates_location_from_dict(self):
+        location = Location(**location_data)
+        assert_equal("Pizza", location.contact_family_name)
+        assert_equal("Man", location.contact_given_name)
+
+    def test_paginating_models(self):
+        names = []
+        for i in range(12):
+            names.append("Event #%s" % i)
+
+        for n in names:
+            Event.create(self.db, **{"name": n})
+
+        page1 = Event.paged(self.db, 1, 10)
+        page2 = Event.paged(self.db, 2, 10)
+
+        assert_equal(names[0:10], map(lambda e: e.name.encode("ascii"), page1))
+        assert_equal(names[10:12], map(lambda e: e.name.encode("ascii"), page2))
+

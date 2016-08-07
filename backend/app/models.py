@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from app.database import Model
+from sqlalchemy import desc
 
 def ascii_keys(d):
     return dict(map(lambda (k,v): (k.encode("ascii"), v),
@@ -17,6 +18,21 @@ class Serializable(object):
 
         return attrs
 
+class Pageable(object):
+    @classmethod
+    def default_order(cls):
+        return cls.id
+
+    @classmethod
+    def paged(cls, db, page = 1, limit = 10):
+        return (db.session
+                .query(cls)
+                .order_by(cls.default_order())
+                .limit(limit)
+                .offset((page - 1) * limit)
+                .all())
+
+
 class Attendee(Model, Serializable):
     __tablename__ = "attendees"
     id = Column(Integer, primary_key = True)
@@ -28,7 +44,7 @@ class Attendee(Model, Serializable):
     def serialized_attrs(self):
         return ["name", "email"]
 
-class Event(Model, Serializable):
+class Event(Model, Serializable, Pageable):
     __tablename__ = "events"
     id = Column(Integer, primary_key = True)
     name = Column(String)
@@ -46,6 +62,15 @@ class Event(Model, Serializable):
     order_email_template = Column(String)
     locations = relationship("Location", back_populates="event")
     attendees = relationship("Attendee", back_populates="event")
+
+    @classmethod
+    def default_order(cls):
+        return desc(Event.start_date)
+
+    @classmethod
+    def create(cls, db, **attributes):
+        event = cls(**attributes)
+        db.save_records(event)
 
     def __init__(self, **attributes):
         encoded = ascii_keys(attributes)

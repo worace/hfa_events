@@ -10,6 +10,7 @@ class AppTestCase(TestCase):
         app.config["TESTING"] = True
         db = DB("hfa_events_test")
         db.init_db()
+        self.db = db
         app.config.update({"db": db})
 
         app.config["db"].session.query(Location).delete()
