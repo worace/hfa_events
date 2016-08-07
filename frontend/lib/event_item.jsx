@@ -2,6 +2,7 @@ import React from 'react';
 import moment from "moment";
 import UserStore from './user_store'
 import $ from "jquery"
+import API from "./api"
 
 // Attendance / RSVP
 // - Have event return list of attendees as part of api payload
@@ -82,11 +83,18 @@ const EventItem = React.createClass({
     return (this.state.isLoggedIn && this.isAttendee(this.state.userInfo));
   },
   rsvp: function() {
-    console.log("RSVP");
     if (!this.state.isLoggedIn) {
       window.alert("login!");
     } else {
-      console.log("LETS RSVP:", this.state.userInfo);
+      let p = API.eventRSVP(this.props.event.id, this.state.userInfo);
+      p.then(function(data) {
+        console.log("RSVP RESPONSED");
+        console.log(data);
+      }).fail(function(data) {
+        console.log("RSVP Failed...", data);
+      }).always(function(data) {
+        console.log("FINISHED....");
+      });
     }
   },
   render: function() {
