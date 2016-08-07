@@ -37,6 +37,7 @@
     "json-loader": "^0.5.4",
     "json5-loader": "^0.6.0",
     "jsx-loader": "^0.13.2",
+    "moment": "^2.14.1",
     "node-libs-browser": "1.0.0",
     "react": "15.3.0",
     "react-dom": "15.3.0",
