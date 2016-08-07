@@ -1,9 +1,27 @@
 body {
-    color: red;
     background: #eee;
 }
 
+.masthead-banner {
+    background: #0057b8;
+    color: white;
+    text-align: center;
+}
+
+.masthead-header {
+    padding: 60px 0px 0px 0px;
+    margin: 10px;
+}
+
+.masthead-message {
+    padding-bottom: 40px;
+}
+
 .event {
+    padding: 10px 0px;
     background: white;
-    border: 1px solid black;
+    margin: 10px 0px;
+}
+.event h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
 }

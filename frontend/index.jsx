@@ -24,19 +24,38 @@ const EventsList = React.createClass({
       return(<EventItem key={event.id} event={event}/>);
     });
   },
+  upcomingEvents: function() {
+    let count = this.state.events.length;
+    switch (count) {
+      case 0:
+        return "0 upcoming events";
+        break;
+      case 1:
+        return "1 upcoming event";
+        break;
+      default:
+        return count + " upcoming events";
+    }
+  },
   render: function() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="events col-sm-9">
-            { this.eventElements() }
-          </div>
-          <div className="events col-sm-3">
-            <UserInfo/>
-          </div>
+      <div>
+        <div className="masthead-banner">
+          <h1 className="masthead-header">Find an Event</h1>
+          <p className="masthead-message">{this.upcomingEvents()}</p>
         </div>
-        <div className="row">
-          <button className="btn btn-primary" type="submit" onClick={this.fetchNextPage}>More Events</button>
+        <div className="container">
+          <div className="row">
+            <div className="events col-sm-9">
+              { this.eventElements() }
+            </div>
+            <div className="events col-sm-3">
+              <UserInfo/>
+            </div>
+          </div>
+          <div className="row">
+            <button className="btn btn-primary" type="submit" onClick={this.fetchNextPage}>More Events</button>
+          </div>
         </div>
       </div>
     );

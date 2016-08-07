@@ -58,10 +58,14 @@ const EventItem = React.createClass({
   details: function() {
     if (this.state.isExpanded) {
       return (
-        <div>
-          <p>{this.state.event.description}</p>
 
-          {this.attendeeList()}
+        <div className="row col-sm-12">
+          <div className="col-sm-9">
+            <p>{this.state.event.description}</p>
+          </div>
+          <div className="col-sm-3">
+            <p>{this.attendeeList()}</p>
+          </div>
         </div>
       )
     } else {
@@ -70,11 +74,12 @@ const EventItem = React.createClass({
   },
   moreOrLess: function() {
     let text = {true: "Less", false: "More"}[this.state.isExpanded];
-    let toggle = function() {
+    let toggle = function(event) {
+      event.preventDefault();
       this.setState({isExpanded: !this.state.isExpanded});
     }.bind(this);
 
-    return <button className="btn btn-default" type="submit" onClick={toggle}>{text}</button>
+    return <p className="col-sm-12"><a href="#" onClick={toggle}>{text}</a></p>
   },
   isAttendee: function(userInfo) {
     let attendees = this.state.event.attendee_info;
@@ -130,16 +135,13 @@ const EventItem = React.createClass({
     return(
       <div className="row event">
         <div className="row col-sm-12">
-          <h3 className="col-sm-12">{this.state.event.name}</h3>
-        </div>
-
-        <div className="row col-sm-12">
-          <div className="col-sm-2">
+          <div className="col-sm-3">
             <p>{this.formattedDate()}</p>
-            <p>{this.formattedStartTime()} to {this.formattedEndTime()}</p>
+            <p><strong>{this.formattedStartTime()} to {this.formattedEndTime()}</strong></p>
           </div>
 
           <div className="col-sm-6">
+            <h4>{this.state.event.name}</h4>
             <p>{this.state.event.location_info.address1}</p>
             <p>{this.cityState()}</p>
           </div>
@@ -151,14 +153,11 @@ const EventItem = React.createClass({
           </div>
         </div>
 
-
         <div className="row col-sm-12">
-          <div className="col-sm-1">
-            {this.moreOrLess()}
-          </div>
-
-          {this.details()}
+          {this.moreOrLess()}
         </div>
+
+        {this.details()}
 
       </div>
     )
