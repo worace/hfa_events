@@ -34,3 +34,9 @@ class AppTestCase(TestCase):
         return self.client.post(path,
                                 data = payload,
                                 content_type = "application/json")
+
+    def delete_json(self, path, value):
+        payload = json.dumps(value)
+        return self.client.delete(path,
+                                  data = payload,
+                                  content_type = "application/json")

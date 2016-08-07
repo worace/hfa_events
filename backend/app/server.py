@@ -70,3 +70,14 @@ def create_attendee(event_id):
     except Exception:
         return jsonify(map(lambda a: a.serialize(), event.attendees))
 
+@app.route("/events/<int:event_id>/attendees", methods=["DELETE"])
+def delete_attendee(event_id):
+    event = query(Event).filter(Event.id == event_id).first()
+    user_info = request.json
+    attendee = query(Attendee).filter(Attendee.event_id == event_id,
+                                      Attendee.name == user_info["name"],
+                                      Attendee.email == user_info["email"])
+    if attendee:
+        attendee.delete()
+
+    return jsonify(map(lambda a: a.serialize(), event.attendees))

@@ -127,3 +127,16 @@ class ApiTest(AppTestCase):
         response = self.post_json(path, user_info)
         assert_equal(response.status_code, 200)
         assert_equal([user_info], response.json)
+
+    def test_removing_an_rsvp(self):
+        event_data, event_response = self.create_sample_event()
+        event_id = event_data["id"]
+
+        user_info = {"name": "Horace", "email": "h@example.com"}
+
+        path = "/events/%s/attendees" % event_id
+        response = self.delete_json(path, user_info)
+
+        assert_equal(response.status_code, 200)
+        assert_equal([], response.json)
+

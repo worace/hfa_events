@@ -77,31 +77,33 @@ const EventItem = React.createClass({
     return <button className="btn btn-default" type="submit" onClick={toggle}>{text}</button>
   },
   isAttendee: function(userInfo) {
-    let result = false;
-    let attendees = this.state.event.attendees;
+    let attendees = this.state.event.attendee_info;
     for (let i = 0; i < attendees.length; i++) {
       let att = attendees[i];
       if (att.name === userInfo.name && att.email === userInfo.email) {
-        result = true;
-        break;
+        return true;
       }
     }
-    return result
+    return false;
   },
   isAttending: function() {
     return (this.state.isLoggedIn && this.isAttendee(this.state.userInfo));
   },
-  rsvp: function() {
+  updateAttendees: function(newAttendees) {
+    let event = this.state.event;
+    event.attendee_info = newAttendees;
+    this.setState({event: event});
+  },
+  updateRSVP: function(isGoing) {
     if (!this.state.isLoggedIn) {
       window.alert("login!");
-    } else {
-      let p = API.eventRSVP(this.state.event.id, this.state.userInfo);
-      p.then(function(updatedAttendees) {
-        let event = this.state.event;
-        event.attendee_info = updatedAttendees;
-        this.setState({event: event})
-      }.bind(this));
+      return;
     }
+
+    let handler = isGoing ? API.eventRSVP : API.eventUnRSVP;
+
+    handler(this.state.event.id,
+            this.state.userInfo).then(this.updateAttendees);
   },
   attendeeList: function() {
     let attendees = this.state.event.attendee_info;
@@ -112,6 +114,16 @@ const EventItem = React.createClass({
       return (<div><p>Who's going:</p><ul>{items}</ul></div>)
     } else {
       return null;
+    }
+  },
+  rsvpButton: function() {
+    if (this.isAttending()) {
+      // janky currying
+      let handler = function() { this.updateRSVP(false) }.bind(this);
+      return <button className="btn btn-danger" type="submit" onClick={handler}>Not Going</button>
+    } else {
+      let handler = function() { this.updateRSVP(true) }.bind(this);
+      return <button className="btn btn-success" type="submit" onClick={handler}>I'm Going!</button>
     }
   },
   render: function() {
@@ -135,7 +147,7 @@ const EventItem = React.createClass({
           <div className="col-sm-3">
             <p>{this.signedUpCount()}</p>
             <p>Are You Going?</p>
-            <button className="btn btn-default" type="submit" onClick={this.rsvp}>RSVP</button>
+            {this.rsvpButton()}
           </div>
         </div>
 
