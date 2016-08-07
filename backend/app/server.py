@@ -43,9 +43,8 @@ def show_event(event_id):
 
 @app.route("/locations", methods=["GET"])
 def show_locations():
-    #TODO -- probably want to paginate these
     return jsonify(map(lambda location: location.serialize(),
-                       all_locations()))
+                       Location.paged(db(), page_number(request))))
 
 @app.route("/locations", methods=["POST"])
 def create_location():

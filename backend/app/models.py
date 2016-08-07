@@ -32,6 +32,10 @@ class Pageable(object):
                 .offset((page - 1) * limit)
                 .all())
 
+    @classmethod
+    def create(cls, db, **attributes):
+        event = cls(**attributes)
+        db.save_records(event)
 
 class Attendee(Model, Serializable):
     __tablename__ = "attendees"
@@ -67,11 +71,6 @@ class Event(Model, Serializable, Pageable):
     def default_order(cls):
         return desc(Event.start_date)
 
-    @classmethod
-    def create(cls, db, **attributes):
-        event = cls(**attributes)
-        db.save_records(event)
-
     def __init__(self, **attributes):
         encoded = ascii_keys(attributes)
         super(Event, self).__init__(**attributes)
@@ -94,7 +93,7 @@ class Event(Model, Serializable, Pageable):
         return ["id", "name", "start_date", "end_date","description",
                 "participant_count", "status", "location_info", "attendee_info"]
 
-class Location(Model, Serializable):
+class Location(Model, Serializable, Pageable):
     __tablename__ = "locations"
     id = Column(Integer, primary_key = True)
     name = Column(String)

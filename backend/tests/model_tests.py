@@ -43,7 +43,7 @@ class ModelTests(AppTestCase):
         assert_equal("Pizza", location.contact_family_name)
         assert_equal("Man", location.contact_given_name)
 
-    def test_paginating_models(self):
+    def test_paginating_events(self):
         names = []
         for i in range(12):
             names.append("Event #%s" % i)
@@ -57,3 +57,16 @@ class ModelTests(AppTestCase):
         assert_equal(names[0:10], map(lambda e: e.name.encode("ascii"), page1))
         assert_equal(names[10:12], map(lambda e: e.name.encode("ascii"), page2))
 
+    def test_paginating_locations(self):
+        names = []
+        for i in range(12):
+            names.append("Location #%s" % i)
+
+        for n in names:
+            Location.create(self.db, **{"name": n})
+
+        page1 = Location.paged(self.db, 1, 10)
+        page2 = Location.paged(self.db, 2, 10)
+
+        assert_equal(names[0:10], map(lambda e: e.name.encode("ascii"), page1))
+        assert_equal(names[10:12], map(lambda e: e.name.encode("ascii"), page2))
