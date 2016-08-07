@@ -6,7 +6,10 @@ let API = {
   },
   eventRSVP: function(eventID, userInfo) {
     let url = "http://localhost:5000/events/" + eventID + "/attendees"
-    return $.post(url, userInfo);
+    return $.ajax({url: url,
+                   method: "POST",
+                   data: JSON.stringify(userInfo),
+                   contentType: "application/json" });
   }
 }
 
