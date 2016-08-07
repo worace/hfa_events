@@ -9,7 +9,9 @@ class ApiTest(AppTestCase):
         for k in ["id", "modified_date", "created_date"]:
             event_data.pop(k, None)
 
-        return (event_data, self.post_json("/events", event_data))
+        response = self.post_json("/events", event_data)
+        event_data["id"] = response.json["event"]["id"]
+        return (event_data, response)
 
     def create_sample_location(self, event_id):
         location_json = self.read_file("./tests/sample_location.json")
@@ -19,7 +21,9 @@ class ApiTest(AppTestCase):
         for k in ["id", "modified_date", "created_date"]:
             location_data.pop(k, None)
 
-        return(location_data, self.post_json("/locations", location_data))
+        response = self.post_json("/locations", location_data)
+        location_data["id"] = response.json["location"]["id"]
+        return(location_data, response)
 
     def test_fetching_events(self):
         response = self.client.get("/events")
@@ -90,3 +94,14 @@ class ApiTest(AppTestCase):
         event = response.json[0]
 
         assert_equal(location_data["name"], event["location_info"]["name"])
+
+    def test_can_rsvp_for_an_event(self):
+        event_data, event_response = self.create_sample_event()
+
+        user_info = {"name": "Horace", "email": "h@example.com"}
+
+        path = "/events/%s/attendees" % event_data["id"]
+        response = self.post_json(path, user_info)
+
+        assert_equal(response.status_code, 200)
+

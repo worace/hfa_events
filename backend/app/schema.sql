@@ -46,3 +46,14 @@ CREATE TABLE IF NOT EXISTS locations (
 );
 
 CREATE INDEX location_event_id ON locations (event_id);
+
+CREATE TABLE IF NOT EXISTS attendees (
+  id serial PRIMARY KEY,
+  event_id integer REFERENCES events (id),
+  name varchar(255),
+  email varchar(255),
+  modified_date timestamp,
+  created_date timestamp
+);
+
+CREATE INDEX attendee_event_id ON attendees (event_id);

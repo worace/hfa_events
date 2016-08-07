@@ -22,6 +22,8 @@ class DB(object):
         import app.models
         Model.metadata.create_all(bind = self.engine)
 
-    def save_record(self, record):
-        self.session.add(record)
+    def save_records(self, *records):
+        for r in records:
+            self.session.add(r)
+
         return self.session.commit()

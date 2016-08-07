@@ -17,6 +17,14 @@ class Serializable(object):
 
         return attrs
 
+class Attendee(Model, Serializable):
+    __tablename__ = "attendees"
+    id = Column(Integer, primary_key = True)
+    name = Column(String)
+    email = Column(String)
+    event_id = Column(Integer, ForeignKey("events.id"))
+    event = relationship("Event", back_populates="attendees")
+
 class Event(Model, Serializable):
     __tablename__ = "events"
     id = Column(Integer, primary_key = True)
@@ -34,6 +42,7 @@ class Event(Model, Serializable):
     reason_for_private = Column(String)
     order_email_template = Column(String)
     locations = relationship("Location", back_populates="event")
+    attendees = relationship("Attendee", back_populates="event")
 
     def __init__(self, **attributes):
         encoded = ascii_keys(attributes)

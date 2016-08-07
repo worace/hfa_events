@@ -1,6 +1,6 @@
 from flask_testing import TestCase
 from flask import Flask
-from app.models import Event, Location
+from app.models import Event, Location, Attendee
 from app.server import app
 from app.database import DB
 import json
@@ -13,6 +13,7 @@ class AppTestCase(TestCase):
         app.config.update({"db": db})
 
         app.config["db"].session.query(Location).delete()
+        app.config["db"].session.query(Attendee).delete()
         app.config["db"].session.query(Event).delete()
 
     def tearDown(self):
