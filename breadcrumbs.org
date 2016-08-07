@@ -3,26 +3,29 @@
 well, how did i get here...
 #+END_QUOTE
 ** Todo
-*** TODO Bulk query for event associations (location and attendees)
-*** TODO Parameterize API url in frontend
-*** TODO flask-rest / flask-rest-swagger  ?
-*** TODO Calendar animation for loading state on list?
-*** TODO can CORS be tuned more? currently just whitelisted everything
-
-*** TODO much more styling
-
-*** DONE Make attendee count pull from attendees rather than static attribute
-*** DONE pagination on locations index
-*** DONE Pagination on events index
-*** DONE sort events in chronological order
-*** DONE Un-RSVP from an event
-*** DONE Handle unique RSVPs (by name and email)
-*** DONE choose and add additional attributes to events index
-*** DONE add more detailed attrs to event show?
-*** DONE Sort out event detail collapse / expand
-*** DONE User "sign in" -- entering details to localstorage?
-*** DONE Marking an event as attending??
-
+*** Blockers
+**** TODO more styling
+**** TODO Bulk query for event associations (location and attendees)
+**** TODO Parameterize API url in frontend
+**** TODO vagrant setup
+**** DONE Make attendee count pull from attendees rather than static attribute
+**** DONE pagination on locations index
+**** DONE Pagination on events index
+**** DONE sort events in chronological order
+**** DONE Un-RSVP from an event
+**** DONE Handle unique RSVPs (by name and email)
+**** DONE choose and add additional attributes to events index
+**** DONE add more detailed attrs to event show?
+**** DONE Sort out event detail collapse / expand
+**** DONE User "sign in" -- entering details to localstorage?
+**** DONE Marking an event as attending??
+*** Wants
+**** TODO frontend testing?
+**** TODO Google map?
+**** TODO flask-rest / flask-rest-swagger ?
+**** TODO Calendar animation for loading state on list?
+**** TODO can CORS be tuned more? currently just whitelisted everything
+ **
 ** VirtualBox Setup
 Install from apt repository
 
