@@ -3,7 +3,6 @@
 well, how did i get here...
 #+END_QUOTE
 ** Todo
-*** TODO Un-RSVP from an event
 *** TODO sort events in chronological order
 *** TODO Pagination on events index / Location Index
 *** TODO flask-rest / flask-rest-swagger  ?
@@ -12,6 +11,7 @@ well, how did i get here...
 
 *** TODO much more styling
 
+*** DONE Un-RSVP from an event
 *** DONE Handle unique RSVPs (by name and email)
 *** DONE choose and add additional attributes to events index
 *** DONE add more detailed attrs to event show?
