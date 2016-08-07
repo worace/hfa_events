@@ -18,10 +18,14 @@ body {
 }
 
 .event {
-    padding: 10px 0px;
+    padding: 15px 0px;
     background: white;
-    margin: 10px 0px;
+    margin: 15px 0px;
 }
 .event h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
+}
+
+p.compact {
+    margin-bottom: 3px;
 }

@@ -136,19 +136,19 @@ const EventItem = React.createClass({
       <div className="row event">
         <div className="row col-sm-12">
           <div className="col-sm-3">
-            <p>{this.formattedDate()}</p>
-            <p><strong>{this.formattedStartTime()} to {this.formattedEndTime()}</strong></p>
+            <p className="compact">{this.formattedDate()}</p>
+            <p className="compact"><strong>{this.formattedStartTime()} to {this.formattedEndTime()}</strong></p>
           </div>
 
           <div className="col-sm-6">
             <h4>{this.state.event.name}</h4>
-            <p>{this.state.event.location_info.address1}</p>
-            <p>{this.cityState()}</p>
+            <p className="compact">{this.state.event.location_info.address1}</p>
+            <p className="compact">{this.cityState()}</p>
           </div>
 
           <div className="col-sm-3">
             <p>{this.signedUpCount()}</p>
-            <p>Are You Going?</p>
+            <p className="compact">Are You Going?</p>
             {this.rsvpButton()}
           </div>
         </div>
