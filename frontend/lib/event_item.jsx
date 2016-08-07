@@ -1,9 +1,25 @@
 import React from 'react';
 import moment from "moment";
+import UserStore from './user_store'
+import $ from "jquery"
+
+// Attendance / RSVP
+// - Have event return list of attendees as part of api payload
+// - 1 check if logged in
+// - 2 check if your user info appears in list of attendees
+
+// If so: show Un-rsvp button
+// If not: show RSVP button
 
 const EventItem = React.createClass({
+  componentDidMount: function() {
+    $(UserStore).on("authStatusChanged", function(event) {
+      this.setState({isLoggedIn: UserStore.isLoggedIn(),
+                     userInfo: UserStore.userInfo()});
+    }.bind(this));
+  },
   getInitialState: function() {
-    return {isExpanded: false};
+    return {isExpanded: false, isLoggedIn: UserStore.isLoggedIn(), userInfo: UserStore.userInfo()};
   },
   formattedDate: function() {
     let start = this.props.event.start_date;
@@ -50,6 +66,29 @@ const EventItem = React.createClass({
 
     return <button className="btn btn-default" type="submit" onClick={toggle}>{text}</button>
   },
+  isAttendee: function(userInfo) {
+    let result = false;
+    let attendees = this.props.event.attendees;
+    for (let i = 0; i < attendees.length; i++) {
+      let att = attendees[i];
+      if (att.name === userInfo.name && att.email === userInfo.email) {
+        result = true;
+        break;
+      }
+    }
+    return result
+  },
+  isAttending: function() {
+    return (this.state.isLoggedIn && this.isAttendee(this.state.userInfo));
+  },
+  rsvp: function() {
+    console.log("RSVP");
+    if (!this.state.isLoggedIn) {
+      window.alert("login!");
+    } else {
+      console.log("LETS RSVP:", this.state.userInfo);
+    }
+  },
   render: function() {
     return(
       <div className="row event">
@@ -71,8 +110,7 @@ const EventItem = React.createClass({
           <div className="col-sm-3">
             <p>{this.signedUpCount()}</p>
             <p>Are You Going?</p>
-            <button className="btn btn-default" type="submit">No</button>
-            <button className="btn btn-default" type="submit">Yes</button>
+            <button className="btn btn-default" type="submit" onClick={this.rsvp}>RSVP</button>
           </div>
         </div>
 
