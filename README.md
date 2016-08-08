@@ -11,6 +11,18 @@ nosetests
 cd ..
 honcho start
 ```
+
+Then open the frontend app in your browser: [http://localhost:3000](http://localhost:3000).
+
+## Notes
+
+## What's Missing
+
+* More robust migrations
+* Actual user auth
+* More extensive error handling and validation on API parameters
+* Pagination metadata in API responses
+
 ### Assignment
 
 #### What to do

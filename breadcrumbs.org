@@ -4,7 +4,10 @@ well, how did i get here...
 #+END_QUOTE
 ** Todo
 *** Blockers
-**** TODO vagrant setup
+**** TODO Rename webpack config stuff (remove example naming)
+**** TODO Final polish/refactor on server.py -- move more query stuff to models
+**** TODO Possible extra component extraction under event_item
+**** DONE vagrant setup
 **** DONE Bulk query for event associations (location and attendees)
 **** DONE Parameterize API url in frontend
 **** DONE more styling
@@ -19,13 +22,6 @@ well, how did i get here...
 **** DONE Sort out event detail collapse / expand
 **** DONE User "sign in" -- entering details to localstorage?
 **** DONE Marking an event as attending??
-*** Wants
-**** TODO frontend testing?
-**** TODO Google map?
-**** TODO flask-rest / flask-rest-swagger ?
-**** TODO Calendar animation for loading state on list?
-**** TODO can CORS be tuned more? currently just whitelisted everything
- **
 ** VirtualBox Setup
 Install from apt repository
 
