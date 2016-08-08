@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 def run_command(cmd):
     p = subprocess.Popen(cmd,
@@ -34,7 +35,7 @@ def setup():
     create_db("hfa_events_dev")
     create_db("hfa_events_test")
 
-    print import_db("hfa_events_dev", "./assignment/data.pgdump")
+    print import_db("hfa_events_dev", os.environ["PG_DUMP_FILE"])
 
     migrate("hfa_events_dev")
     migrate("hfa_events_test")
