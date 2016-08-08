@@ -40,6 +40,4 @@ sudo apt-get install -y curl
 # Add PPA for latest version of node
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
-cd ../frontend
-npm config set registry http://registry.npmjs.org
-npm install
+sudo npm install -g webpack webpack-dev-server

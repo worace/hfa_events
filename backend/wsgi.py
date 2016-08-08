@@ -5,5 +5,5 @@ if __name__ == "__main__":
     db = DB("hfa_events_dev")
     db.init_db()
     app.config.update({"db": db})
-    app.run()
+    app.run(host="0.0.0.0")
 

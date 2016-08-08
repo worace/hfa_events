@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:5000"
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:9292"
 
 function apiURL(path) {
   return API_BASE_URL + path;
