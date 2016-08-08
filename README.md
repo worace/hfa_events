@@ -15,6 +15,7 @@ To run it, use these steps:
 ```sh
 vagrant up
 vagrant ssh
+source env/bin/activate
 cd backend
 nosetests
 cd ..

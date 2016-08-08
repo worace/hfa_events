@@ -28,16 +28,15 @@ set +o nounset
 source env/bin/activate
 set -o nounset
 
-pip install -r backend/requirements.txt
-pip install honcho # to run the procfile
+sudo pip install -r backend/requirements.txt
 
 cd backend
 # Setup backend app db
 PG_DUMP_FILE="/vagrant/data.pgdump" python app/db_import.py
 
-# Install frontend app dependencies
+# # Install frontend app dependencies
 sudo apt-get install -y curl
-# Add PPA for latest version of node
+# # Add PPA for latest version of node
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo npm install -g webpack webpack-dev-server

@@ -1,5 +1,5 @@
 {
-  "name": "HFA Events Demo App",
+  "name": "hfa-events-demp-app",
   "version": "0.0.2",
   "description": "View list of upcoming Hillary Events",
   "main": "''",
@@ -12,7 +12,7 @@
     "url": "https://github.com/worace/hfa_events"
   },
   "keywords": [
-    "React",
+    "React"
   ],
   "author": "Horace Williams",
   "license": "MIT",
