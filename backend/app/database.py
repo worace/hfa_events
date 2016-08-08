@@ -13,6 +13,9 @@ class DB(object):
         self.session = scoped_session(sessionmaker(autocommit=False,
                                                    autoflush=False,
                                                    bind=self.engine))
+    def query(self, model_cls):
+        return self.session.query(model_cls)
+
     def disconnect(self):
         self.session.close()
         self.connection.close()

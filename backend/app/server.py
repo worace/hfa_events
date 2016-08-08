@@ -13,9 +13,6 @@ CORS(app)
 def db():
     return app.config["db"]
 
-def query(model):
-    return db().session.query(model)
-
 def page_number(request):
     try:
         return max([1, int(request.args["page"])])
@@ -40,7 +37,7 @@ def create_event():
 
 @app.route("/events/<int:event_id>")
 def show_event(event_id):
-    event = (query(Event)
+    event = (db().query(Event)
              .options(joinedload('locations'),
                       joinedload('attendees'))
              .filter(Event.id == event_id)
@@ -61,12 +58,12 @@ def create_location():
 
 @app.route("/locations/<int:location_id>")
 def show_location(location_id):
-    loc = query(Location).filter(Location.id == location_id).first()
+    loc = db().query(Location).filter(Location.id == location_id).first()
     return jsonify(loc.serialize())
 
 @app.route("/events/<int:event_id>/attendees", methods=["POST"])
 def create_attendee(event_id):
-    event = query(Event).filter(Event.id == event_id).first()
+    event = db().query(Event).filter(Event.id == event_id).first()
     user_info = request.json
     attendee = Attendee(**user_info)
     event.attendees.append(attendee)
@@ -79,9 +76,9 @@ def create_attendee(event_id):
 
 @app.route("/events/<int:event_id>/attendees", methods=["DELETE"])
 def delete_attendee(event_id):
-    event = query(Event).filter(Event.id == event_id).first()
+    event = db().query(Event).filter(Event.id == event_id).first()
     user_info = request.json
-    attendee = query(Attendee).filter(Attendee.event_id == event_id,
+    attendee = db().query(Attendee).filter(Attendee.event_id == event_id,
                                       Attendee.name == user_info["name"],
                                       Attendee.email == user_info["email"])
     if attendee:
