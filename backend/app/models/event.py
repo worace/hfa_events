@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, joinedload
 from app.database import Model
 from sqlalchemy import desc
-from app.models.shared import Serializable, Pageable, ascii_keys
+from app.models.shared import BaseModel, Serializable, Pageable, ascii_keys
 
-class Event(Model, Serializable, Pageable):
+class Event(Model, BaseModel, Serializable, Pageable):
     __tablename__ = "events"
     id = Column(Integer, primary_key = True)
     name = Column(String)
@@ -26,6 +26,18 @@ class Event(Model, Serializable, Pageable):
     @classmethod
     def default_order(cls):
         return desc(Event.start_date)
+
+    @classmethod
+    def paged_with_associations(cls, db, page, limit):
+        return cls.paged(db, page, limit, [joinedload("attendees"), joinedload("locations")])
+
+    @classmethod
+    def find_with_associations(cls, db, id):
+        return (db
+                .query(cls)
+                .options([joinedload("attendees"), joinedload("locations")])
+                .filter(cls.id == id)
+                .first())
 
     def __init__(self, **attributes):
         encoded = ascii_keys(attributes)

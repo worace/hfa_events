@@ -2,9 +2,9 @@ from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from app.database import Model
 from sqlalchemy import desc
-from app.models.shared import Serializable, Pageable, ascii_keys
+from app.models.shared import BaseModel, Serializable, Pageable, ascii_keys
 
-class Location(Model, Serializable, Pageable):
+class Location(Model, BaseModel, Serializable, Pageable):
     __tablename__ = "locations"
     id = Column(Integer, primary_key = True)
     name = Column(String)

@@ -7,6 +7,17 @@ def ascii_keys(d):
     return dict(map(lambda (k,v): (k.encode("ascii"), v),
                     d.items()))
 
+class BaseModel(object):
+    @classmethod
+    def create(cls, db, **attributes):
+        record = cls(**attributes)
+        db.save_records(record)
+        return record
+
+    @classmethod
+    def find(cls, db, id):
+        return (db.query(cls).filter(cls.id == id).first())
+
 class Serializable(object):
     def serialized_attrs(self):
         return []

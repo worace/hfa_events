@@ -6,7 +6,6 @@ from app.models.location import Location
 from app.models.attendee import Attendee
 from app.json_encoder import DecimalSafeJSONEncoder
 from flask_cors import CORS
-from sqlalchemy.orm import joinedload
 
 app = Flask(__name__)
 app.json_encoder = DecimalSafeJSONEncoder
@@ -23,27 +22,18 @@ def page_number(request):
 
 @app.route("/events", methods=["GET"])
 def show_events():
-    return jsonify(map(lambda event: event.serialize(),
-                       Event.paged(db(),
-                                   page_number(request),
-                                   10,
-                                   [joinedload("attendees"),
-                                    joinedload("locations")])))
+    events = Event.paged_with_associations(db(), page_number(request), 10)
+    return jsonify(map(lambda event: event.serialize(), events))
 
 @app.route("/events", methods=["POST"])
 def create_event():
-    event = Event(**request.json)
-    db().save_records(event)
+    event = Event.create(db(), **request.json)
     return jsonify({"success": True,
                     "event": event.serialize()})
 
 @app.route("/events/<int:event_id>")
 def show_event(event_id):
-    event = (db().query(Event)
-             .options(joinedload('locations'),
-                      joinedload('attendees'))
-             .filter(Event.id == event_id)
-             .first())
+    event = Event.find_with_associations(db(), event_id)
     return jsonify(event.serialize())
 
 @app.route("/locations", methods=["GET"])
@@ -53,21 +43,19 @@ def show_locations():
 
 @app.route("/locations", methods=["POST"])
 def create_location():
-    loc = Location(**request.json)
-    db().save_records(loc)
+    loc = Location.create(db(), **request.json)
     return jsonify({"success": True,
                     "location": loc.serialize()})
 
 @app.route("/locations/<int:location_id>")
 def show_location(location_id):
-    loc = db().query(Location).filter(Location.id == location_id).first()
+    loc = Location.find(db(), location_id)
     return jsonify(loc.serialize())
 
 @app.route("/events/<int:event_id>/attendees", methods=["POST"])
 def create_attendee(event_id):
-    event = db().query(Event).filter(Event.id == event_id).first()
-    user_info = request.json
-    attendee = Attendee(**user_info)
+    event = Event.find(db(), event_id)
+    attendee = Attendee(**request.json)
     event.attendees.append(attendee)
 
     try:
@@ -78,11 +66,11 @@ def create_attendee(event_id):
 
 @app.route("/events/<int:event_id>/attendees", methods=["DELETE"])
 def delete_attendee(event_id):
-    event = db().query(Event).filter(Event.id == event_id).first()
+    event = Event.find(db(), event_id)
     user_info = request.json
     attendee = db().query(Attendee).filter(Attendee.event_id == event_id,
-                                      Attendee.name == user_info["name"],
-                                      Attendee.email == user_info["email"])
+                                           Attendee.name == user_info["name"],
+                                           Attendee.email == user_info["email"])
     if attendee:
         attendee.delete()
 
