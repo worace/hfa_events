@@ -6,6 +6,9 @@
 vagrant up
 vagrant ssh
 source env/bin/activate
+cd backend
+nosetests
+cd ..
 honcho start
 ```
 ### Assignment
