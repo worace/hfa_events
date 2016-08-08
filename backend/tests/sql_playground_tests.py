@@ -3,7 +3,8 @@ from sqlalchemy import MetaData, Table
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from app.database import DB
-from app.models import Event, Location
+from app.models.event import Event
+from app.models.location import Location
 
 
 def test_making_sql_conn():

@@ -1,6 +1,8 @@
 from flask_testing import TestCase
 from flask import Flask
-from app.models import Event, Location, Attendee
+from app.models.event import Event
+from app.models.location import Location
+from app.models.attendee import Attendee
 from app.server import app
 from app.database import DB
 import json

@@ -1,4 +1,5 @@
-from app.models import Event, Location
+from app.models.event import Event
+from app.models.location import Location
 from nose.tools import *
 import datetime
 from test_helper import AppTestCase

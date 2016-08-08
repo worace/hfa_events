@@ -1,7 +1,9 @@
 from flask import Flask, request
 from flask.json import jsonify
 from app.database import DB
-from app.models import Event, Location, Attendee
+from app.models.event import Event
+from app.models.location import Location
+from app.models.attendee import Attendee
 from app.json_encoder import DecimalSafeJSONEncoder
 from flask_cors import CORS
 from sqlalchemy.orm import joinedload
