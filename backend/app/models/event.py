@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean
+from sqlalchemy import Column, Integer, ForeignKey, String, DateTime, Boolean, asc
 from sqlalchemy.orm import relationship, joinedload
 from app.database import Model
-from sqlalchemy import desc
 from app.models.shared import BaseModel, Serializable, Pageable, ascii_keys
 
 class Event(Model, BaseModel, Serializable, Pageable):
@@ -25,7 +24,7 @@ class Event(Model, BaseModel, Serializable, Pageable):
 
     @classmethod
     def default_order(cls):
-        return desc(Event.start_date)
+        return asc(Event.start_date)
 
     @classmethod
     def paged_with_associations(cls, db, page, limit):

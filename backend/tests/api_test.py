@@ -154,7 +154,7 @@ class ApiTest(AppTestCase):
         for t in times:
             serialized_times.append(t.strftime("%Y-%m-%d %H:%M:%S"))
 
-        soon, sooner, soonest = serialized_times
+        soonest, sooner, soon = serialized_times
 
         e1 = {"start_date": sooner}
         e2 = {"start_date": soonest}
