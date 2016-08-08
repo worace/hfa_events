@@ -1,7 +1,7 @@
 {
-  "name": "react-webpack-babel",
+  "name": "HFA Events Demo App",
   "version": "0.0.2",
-  "description": "React Webpack Babel Starter Kit",
+  "description": "View list of upcoming Hillary Events",
   "main": "''",
   "scripts": {
     "build": "webpack -p --config webpack.production.config.js --progress --profile --colors",
@@ -9,21 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alicoding/react-webpack-babel"
+    "url": "https://github.com/worace/hfa_events"
   },
   "keywords": [
     "React",
-    "Webpack",
-    "Babel",
-    "Starter",
-    "template"
   ],
-  "author": "Ali Al Dallal",
+  "author": "Horace Williams",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/alicoding/react-webpack-babel/issues"
-  },
-  "homepage": "https://github.com/alicoding/react-webpack-babel#readme",
+  "homepage": "https://github.com/worace/hfa_events",
   "dependencies": {
     "babel-core": "6.13.2",
     "babel-loader": "6.2.4",
