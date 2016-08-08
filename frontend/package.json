@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/alicoding/react-webpack-babel#readme",
   "dependencies": {
-    "babel-core": "6.10.4",
+    "babel-core": "6.13.2",
     "babel-loader": "6.2.4",
-    "babel-preset-es2015": "6.9.0",
+    "babel-preset-es2015": "6.13.2",
     "babel-preset-react": "6.11.1",
     "bootstrap": "3.3.7",
     "copy-webpack-plugin": "^3.0.1",
