@@ -2,6 +2,13 @@
 
 ## Setup / Running
 
+Extracting the tarball:
+
+```
+tar -xzf horace_hfa_events_app.tar.gz
+cd hfa_events
+```
+
 The project is split into 2 subdirectories:
 
 ```
