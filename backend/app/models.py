@@ -24,9 +24,10 @@ class Pageable(object):
         return cls.id
 
     @classmethod
-    def paged(cls, db, page = 1, limit = 10):
+    def paged(cls, db, page = 1, limit = 10, options = []):
         return (db.session
                 .query(cls)
+                .options(*options)
                 .order_by(cls.default_order())
                 .limit(limit)
                 .offset((page - 1) * limit)
