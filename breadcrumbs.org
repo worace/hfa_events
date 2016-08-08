@@ -4,8 +4,8 @@ well, how did i get here...
 #+END_QUOTE
 ** Todo
 *** Blockers
-**** TODO Bulk query for event associations (location and attendees)
 **** TODO vagrant setup
+**** DONE Bulk query for event associations (location and attendees)
 **** DONE Parameterize API url in frontend
 **** DONE more styling
 **** DONE Make attendee count pull from attendees rather than static attribute
